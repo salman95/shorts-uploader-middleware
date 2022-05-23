@@ -1,0 +1,6 @@
+#ignore node_modules to be added into the repo
+node_modules
+
+#ignore video files that were tested
+file-upload/*
+exported-files/*
