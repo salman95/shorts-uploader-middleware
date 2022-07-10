@@ -11,9 +11,10 @@ var conversion = function(fileName) {
             return;
         }
         console.log(`stdout: ${stdout}`);
+        exec(`rm -rf ./file-upload/${fileName}`);
         if(stdout) {
             exec(`rm -rf ./file-upload/${fileName}`);
-            console.log('Orginal File deleted');
+            console.log('Original File deleted');
         }
     });
   

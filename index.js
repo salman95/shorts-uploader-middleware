@@ -14,9 +14,9 @@ app.post('/api/files', (req, res) => {
         console.log("File is showing as undefined");
     } else {
         console.log("File is showing correctly");
-        this.filenameLol = req.files.file.name;
+        this.filenameLol = req.files.file.name.replace(/\s+/g, '');//removes whitespaces first
+        
         console.log('The file name is ' + this.filenameLol);
-        //console.log(req.files.file)
         req.files.file.mv(`./file-upload/${this.filenameLol}`, (err) => {
         });
     }
