@@ -2,10 +2,12 @@ const express = require('express');
 const upload = require('express-fileupload');
 const { exec } = require('child_process');
 const convert = require('./app/conversion');
+const cors = require('cors');
 const app = express();
 
 let fileNameLol;
 app.use(upload());
+app.use(cors());
 
 app.post('/api/files', (req, res) => {
     res.send("Response Successful");
@@ -15,7 +17,6 @@ app.post('/api/files', (req, res) => {
     } else {
         console.log("File is showing correctly");
         this.filenameLol = req.files.file.name.replace(/\s+/g, '');//removes whitespaces first
-        
         console.log('The file name is ' + this.filenameLol);
         req.files.file.mv(`./file-upload/${this.filenameLol}`, (err) => {
         });
@@ -39,7 +40,20 @@ app.get('/api/testGet',(req,res) => {
 app.get('/api/convert-video', (req, res) => {
     convert(this.filenameLol);
     //console.log("Conversion is done. Async worked.")
-    
+})
+app.get('/api/download-video', (req, res) => { 
+    res.download(`./exported-files/${this.filenameLol}.avi`, (err) => {
+        if (err) {
+            res.status(404)
+            res.end();
+            console.log(err);
+        }
+        else {
+            console.log("File downloaded");
+            res.end();
+        }
+    }
+    );
 })
 
 app.listen(5000)
