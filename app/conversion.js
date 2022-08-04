@@ -1,7 +1,7 @@
 const { exec, spawn, spawnSync } = require('child_process');
 
 var conversion = function(fileName) {
-    exec(`ffmpeg -i ./file-upload/${fileName} ./exported-files/${fileName}.avi`, (error, stdout, stderr) => {
+    new exec(`ffmpeg -i ./file-upload/${fileName} -vf 'crop=605:1440' -c:v libx265 -s 2560x1440 -crf 22 -preset fast ./exported-files/${fileName}`, (error, stdout, stderr) => {
         if (error) {
             console.log(`error: ${error.message}`);
             return;

@@ -1,7 +1,8 @@
 const express = require('express');
 const upload = require('express-fileupload');
-const { exec } = require('child_process');
 const convert = require('./app/conversion');
+const shortConvert = require('./app/shortConversion');
+const compressVideo = require('./app/videoCompression');
 const cors = require('cors');
 const app = express();
 
@@ -20,29 +21,22 @@ app.post('/api/files', (req, res) => {
         console.log('The file name is ' + this.filenameLol);
         req.files.file.mv(`./file-upload/${this.filenameLol}`, (err) => {
         });
+        
     }
 
 })
-app.get('/api/testGet',(req,res) => {
-    exec("ls -la", (error, stdout, stderr) => {
-        if (error) {
-            console.log(`error: ${error.message}`);
-            return;
-        }
-        if (stderr) {
-            console.log(`stderr: ${stderr}`);
-            return;
-        }
-        console.log(`stdout: ${stdout}`);
-        res.send(stdout);
-    });
-})
+
 app.get('/api/convert-video', (req, res) => {
-    convert(this.filenameLol);
-    //console.log("Conversion is done. Async worked.")
+    shortConvert(this.filenameLol);
 })
+
+app.get('/api/compress-video', (req, res) => {
+    compressVideo(this.filenameLol);
+    //convert(this.filenameLol);
+});
+
 app.get('/api/download-video', (req, res) => { 
-    res.download(`./exported-files/${this.filenameLol}.avi`, (err) => {
+    res.download(`./exported-files/${this.filenameLol}`, (err) => {
         if (err) {
             res.status(404)
             res.end();
