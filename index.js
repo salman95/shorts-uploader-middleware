@@ -21,16 +21,15 @@ app.post('/api/files', (req, res) => {
         console.log('The file name is ' + this.filenameLol);
         req.files.file.mv(`./file-upload/${this.filenameLol}`, (err) => {
         });
-        
     }
 
 })
 
-app.get('/api/convert-video', (req, res) => {
+app.post('/api/convert-video', (req, res) => {
     shortConvert(this.filenameLol);
 })
 
-app.get('/api/compress-video', (req, res) => {
+app.post('/api/compress-video', (req, res) => {
     compressVideo(this.filenameLol);
     //convert(this.filenameLol);
 });

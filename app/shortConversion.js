@@ -4,12 +4,6 @@ const ffprobe = require('ffprobe');
 var shortConversion = function(fileName) {
     let width = 0;
     let height = 0;
-
-    new ffmpeg.ffprobe(`./file-upload/${fileName}`, function(err, metadata) {
-        width = metadata.streams[0].width;
-        height = metadata.streams[0].height;
-        console.log(`${width}x${height}`);
-    });
     
     new ffmpeg(`./file-upload/${fileName}`)
         .videoFilter(`crop=605:${height}`)
