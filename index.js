@@ -1,5 +1,6 @@
 const express = require('express');
 const upload = require('express-fileupload');
+const cookieParser = require('cookie-parser');
 const convert = require('./app/conversion');
 const shortConvert = require('./app/shortConversion');
 const compressVideo = require('./app/videoCompression');
@@ -9,6 +10,7 @@ const app = express();
 let fileNameLol;
 app.use(upload());
 app.use(cors());
+app.use(cookieParser());
 
 app.post('/api/files', (req, res) => {
     res.send("Response Successful");
